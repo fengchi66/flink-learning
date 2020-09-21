@@ -208,3 +208,28 @@
 
 ## 四、 配置方法
 
+### Expilcit & Implicit
+
+- Expilcit
+  - Size,Min/Max
+  - 严格保证（包括默认值）
+  - 配置不当可能引发冲突
+
+- Implicit
+  - Fraction
+  - 非严格保证
+  - 存在冲突时优先保证Expilcit
+
+> 1. 所有的size，min/max都是严格保证的，所谓严格保证：如果配置了一个size=100m， 配置结果一定是100m。如果配置了min/max是100-200m， 最终配置的内存大小一定在这个范围内。
+>    1. 与之对应的Implicit，如果并不想配比如Managed Memory的内存大小，但是可以指定Managed Memory就是Flink Memory的一个比例。 
+
+
+
+### 如何避免配置冲突
+
+- 以下三项至少配置一项，不建议同时配置两项及以上
+  - Total Process
+  - Total Flink
+  - Task Heap & Managed
+- No Explicit Default
+
