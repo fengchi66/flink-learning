@@ -14,5 +14,9 @@ object Config {
   val dataKafkaBsServers: String = load.getString("data.kafka.bootstrap.servers")
   val groupId = load.getString("data.kafka.group.id")
   val odsEventTopic = load.getString("kafka.ods.topic")
+  
+  def main(args: Array[String]): Unit = {
+    println(dataKafkaBsServers)
+  }
 
 }

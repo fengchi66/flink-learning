@@ -11,5 +11,11 @@
         <module name="table" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="common" target="1.5" />
+      <module name="flink-learning" target="1.5" />
+      <module name="stream" target="1.5" />
+      <module name="table" target="1.5" />
+    </bytecodeTargetLevel>
   </component>
 </project>

@@ -99,7 +99,6 @@ object Operations {
     /**
      * 8. Having
      */
-
     val table5 = tableEnv.sqlQuery(
       """
         |SELECT event, COUNT(1)
