@@ -2,22 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0f47cc85-5284-4e84-b443-2de755b6a285" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/table/src/main/scala/com/yit/data/queries/TopN.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/scala/com/yit/data/util/Config.scala" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/scala/com/yit/data/util/Config.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/com/yit/data/util/Config$.class" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/com/yit/data/util/Config$.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/com/yit/data/util/Config.class" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/com/yit/data/util/Config.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/table/src/main/scala/com/yit/data/common/KafkaSourceFactory.scala" beforeDir="false" afterPath="$PROJECT_DIR$/table/src/main/scala/com/yit/data/common/KafkaSourceFactory.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/table/src/main/scala/com/yit/data/queries/Operations.scala" beforeDir="false" afterPath="$PROJECT_DIR$/table/src/main/scala/com/yit/data/queries/Operations.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/table/target/classes/com/yit/data/common/KafkaSourceFactory$$anon$2$$anon$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/table/target/classes/com/yit/data/common/KafkaSourceFactory$$anon$2$$anonfun$createSerializer$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/table/target/classes/com/yit/data/common/KafkaSourceFactory$$anon$2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/table/target/classes/com/yit/data/common/KafkaSourceFactory$$anonfun$main$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/table/target/classes/com/yit/data/common/KafkaSourceFactory$$anonfun$main$2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/table/target/classes/com/yit/data/common/KafkaSourceFactory$.class" beforeDir="false" afterPath="$PROJECT_DIR$/table/target/classes/com/yit/data/common/KafkaSourceFactory$.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/table/target/classes/com/yit/data/queries/Operations$.class" beforeDir="false" afterPath="$PROJECT_DIR$/table/target/classes/com/yit/data/queries/Operations$.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/flink内存模型/Flink TaskExecutor内存管理.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/flink内存模型/Flink TaskExecutor内存管理.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,6 +30,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="jdk.selected.JAVA_MODULE" value="1.8" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/docs" />
     <property name="project.structure.last.edited" value="Modules" />
@@ -192,6 +181,10 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="320" y="23" width="1280" height="999" key="SettingsEditor/-1792.669.1792.1120/0.0.1920.1080@0.0.1920.1080" timestamp="1599407904188" />
+    <state x="293" y="214" key="com.intellij.ide.util.TipDialog" timestamp="1600696446287">
+      <screen x="0" y="0" width="1344" height="840" />
+    </state>
+    <state x="293" y="214" key="com.intellij.ide.util.TipDialog/0.0.1344.840@0.0.1344.840" timestamp="1600696446287" />
     <state x="0" y="104" key="new project wizard" timestamp="1599570031449">
       <screen x="0" y="0" width="1344" height="840" />
     </state>

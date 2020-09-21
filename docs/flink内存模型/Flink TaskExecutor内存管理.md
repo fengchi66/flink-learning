@@ -17,15 +17,100 @@
 
 
 
-## 二、内存类型及用途
+## 二、Flink内存类型及用途
 
 <img src="Flink TaskExecutor内存管理.assets/image-20200920223853718.png" alt="image-20200920223853718" style="zoom:50%;" />
 
 > 左图是Flink1.10设计文档的内存模型图，有图为Flink 官方用户文档内存模型，实际上语义是一样的。
+>
+> 1. Process Memory: 一个Flink TaskExecutor进程使用的所有内存包含在内， 尤其是在容器化的环境中。
+> 2. Flink Memory：抛出JVM自身的开销，留下的专门用于Flink应用程序的内存用量，通常用于standlone模式下。
 
 
 
-###  Framework 和Task Memory
+###  Framework 和 Task Memory
+
+- 区别：是否计入Slot资源
+
+- 总用量受限: 
+
+  - -Xmx = Framework Heap + Task Heap
+  - -XX:MaxDirectMemorySize= Network + Framework Off-Heap + Task Off-Heap
+
+- 无隔离
+
+  <img src="Flink TaskExecutor内存管理.assets/image-20200921222757296.png" alt="image-20200921222757296" style="zoom:50%;" />
+
+> 1. 设置JVM的参数，但我们并没有在Slot与Framework之间进行隔离，一个TaskExecutor是一个进程，不管TaskExecutor进行的是Slot也好，还是框架的其他任务也好，都是线程级别的任务。那对于JVM的内存特点来说，它是不会在线程级别对内存的使用量进行限制的。那为什么还要引入Framework与Task的区别呢？为后续版本的准备：动态切割Slot资源。
+> 2. 不建议对Framework的内存进行调整，保留它的默认值。在Flink 1.10发布之前，它的默认值是通过跑一个空的Cluster，上面不调度任何任务的情况下，通过测量、计算出来的Framework所需要的内存。
+
+
+
+### Heap 和 Off-Heap Memory
+
+- Heap 
+  - Java的堆内存，适用于绝大多数Java对象
+  - HeapStateBackend
+- Off-Heap
+  - Direct: Java中的直接内存，但凡一下两种方式申请的内存，都属于Direct
+    - DirectByteBuffer
+    - MappedByteBuffer
+  - Native
+    - Native内存指的是像JNI、C/C++、Python、etc所用的不受Jvm进程管控的一些内存。
+
+> Flink的配置模型没有要求用户对Direct和Native进行区分的，统一叫做Off-Heap。
+
+
+
+### NetWork Memory：
+
+- 用于
+  - 数据传输缓冲
+- 特点
+  - 同一个TaskExecutor之间没有隔离
+  - 需要多少由作业拓扑决定，不足会导致作业运行失败
+
+> 1. 使用的是Direct Memory，只不过由于Network Memory在配置了指定大小之后，在集群启动的时候，它会去由已经配置的大小去把内存申请下来，并且在整个TaskExecutor Shutdown之前，都不会去释放内存。
+> 2. 当通常考虑Network Memory用了多少，没有用多少的时候，这部分Network Memory实际上是一个常量，所以把它从Off-Heap里面拆出来单独管理。
+
+
+
+### Managed Memory
+
+- 用于
+  - RocksDBStateBackend
+  - Batch Operator
+  - HeapStateBackend / 无状态应用，不需要Managed Memory，可以设置为0
+- 特点
+  - 同一TaskExecutor之间的多个Slot严格隔离
+  - 多点少点都能跑，与性能挂钩
+- RocksDB内存限制
+  - state.backend.rocksdb.memory.m anaged (default: true)
+  - 设置RocksDB实用的内存大小 Managed Memory 大小
+  - 目的：避免容器内存超用，RocksDB的内存申请是在RocksDB内部完成的，Flink没有办法进行直接干预，但可以通过设置RocksDB的参数，让RocksDB去申请的内存大小刚好不超过Managed Memory。主要目的是为了防止state比较多(一个state一个列族)，RocksDB的内存超用，造成容器被Yarn/K8s Kill掉。
+
+> 1. 本质上是用的Native Memory，并不会受到JVM的Heap、Direct大小的限制。不受JVM的掌控的，但是Flink会对它进行管理，Flink会严格控制到底申请了多少Managed Memory。
+> 2. RocksDB实用C++写成的一个数据库，会用到Native Memory。
+> 3. 一个Slot有多少Managed Memory，一定没有办法超用，这是其中一个特点；不管是RocksDB的用户，还是Batch Operator的用户，Task并没有一个严格要用多少大小的memory，可能会有一个最低限度，但一般会很小。
+
+
+
+### JVM Metaspace
+
+- 存放JVM加载的类的元数据
+- 加载的类越多，需要空间越大
+- 以下情况需要增大JVM Metaspace
+  - 作业需要加载大量第三方库
+  - 多个不同作业的任务运行在同一TaskExecutor上
+
+
+
+### JVM Overhead
+
+- Native Memory
+- 用于Jvm其他开销
+  - code cache
+  - Thread Stack
 
 
 
@@ -61,8 +146,6 @@
   - 受JVM管理
     - 用量上限、申请、释放（GC）等
     - Heap、Direct、Metaspace、even some Native（e.g., Thread Stack）
-
-
 
 ### Heap Memory特性
 
